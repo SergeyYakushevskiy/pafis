@@ -3,5 +3,7 @@
 **/.idea/
 
 ### Python ###
+venv/
 .venv/
 **/.venv/
+**/venv/
