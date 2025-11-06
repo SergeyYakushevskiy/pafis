@@ -1,9 +1,2 @@
-### IDEA ###
 .idea/
-**/.idea/
-
-### Python ###
-venv/
 .venv/
-**/.venv/
-**/venv/
