@@ -28,7 +28,7 @@ public class Main {
         List<Long> numbers = IntStream.range(0, PRN_COUNT)
                 .mapToObj(x -> AesCtrGenerator.nextLong())
                 .toList();
-        System.out.printf("Готово! Числа: %s\n", numbers.stream()
+        System.out.printf("Готово! Числа: %s%n", numbers.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(", "))
         );
