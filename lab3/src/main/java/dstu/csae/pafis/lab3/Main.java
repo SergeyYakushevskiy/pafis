@@ -1,4 +1,6 @@
-package dstu.csae.pafis.generator;
+package dstu.csae.pafis.lab3;
+
+import dstu.csae.pafis.lab3.generator.AesCtrGenerator;
 
 import java.io.File;
 import java.io.FileWriter;

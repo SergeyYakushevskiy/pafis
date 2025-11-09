@@ -1,4 +1,4 @@
-package dstu.csae.pafis.generator;
+package dstu.csae.pafis.lab3.generator;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
