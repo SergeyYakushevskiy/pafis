@@ -6,6 +6,8 @@ import java.util.List;
 
 public class SpectralTest {
 
+    private SpectralTest(){}
+
     /**
      * Длина блока для спектрального теста (степень двойки)
      */
@@ -37,17 +39,15 @@ public class SpectralTest {
 
         // Выполняем тест для каждого блока и собираем результаты
         List<Double> pValues = new ArrayList<>();
-        List<Double> chiSquares = new ArrayList<>();
 
         for (int i = 0; i < blocks.size(); i++) {
             System.out.println("\n--- Обработка блока " + (i + 1) + " ---");
             BlockResult result = processBlock(blocks.get(i));
             pValues.add(result.pValue);
-            chiSquares.add(result.chiSquare);
         }
 
         // Усредняем результаты по всем блокам
-        return calculateOverallPValue(pValues, chiSquares);
+        return calculateOverallPValue(pValues);
     }
 
     /**
@@ -73,7 +73,6 @@ public class SpectralTest {
     private static BlockResult processBlock(String block) {
         int n = BLOCK_SIZE;
 
-        // Преобразуем биты в последовательность {-1, +1}
         double[] x = new double[n];
         for (int i = 0; i < n; i++) {
             x[i] = (block.charAt(i) == '1') ? 1.0 : -1.0;
@@ -120,7 +119,7 @@ public class SpectralTest {
     /**
      * Вычисляет общий p-value на основе результатов всех блоков.
      */
-    private static double calculateOverallPValue(List<Double> pValues, List<Double> chiSquares) {
+    private static double calculateOverallPValue(List<Double> pValues) {
         // Метод Фишера для объединения p-values
         double fisherStatistic = 0.0;
         for (double pValue : pValues) {
@@ -249,28 +248,4 @@ public class SpectralTest {
         return result;
     }
 
-    // Комплиментарная функция ошибок (для вычисления p-value)
-    private static double erfc(double x) {
-        return 1.0 - erf(x);
-    }
-
-    // Функция ошибок (аппроксимация)
-    private static double erf(double x) {
-        // sign
-        int sign = x < 0 ? -1 : 1;
-        x = Math.abs(x);
-
-        // constants
-        double a1 = 0.254829592;
-        double a2 = -0.284496736;
-        double a3 = 1.421413741;
-        double a4 = -1.453152027;
-        double a5 = 1.061405429;
-        double p = 0.3275911;
-
-        double t = 1.0 / (1.0 + p * x);
-        double y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-        return sign * y;
-    }
 }
