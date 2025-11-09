@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main{
 
     public static final String FILE_SEPARATOR = File.separator;
-    public static final String[] PATH_TO_SEQUENCE = {
+    protected static final String[] PATH_TO_SEQUENCE = {
             System.getProperty("user.dir"),
             "lab3",
             "src",
@@ -20,18 +20,20 @@ public class Main{
             "data.00001"
     };
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(String.join(FILE_SEPARATOR, PATH_TO_SEQUENCE)));
-        String sequence = reader.readLine();
-        reader.close();
-        System.out.printf("Последовательность: %s\n", sequence);
-        double pValue = SpectralTest.test(sequence);
-        System.out.printf("Spectral Test p-value: %.6f%n", pValue);
+    public static void main(String[] args){
+        try(BufferedReader reader = new BufferedReader(new FileReader(String.join(FILE_SEPARATOR, PATH_TO_SEQUENCE)))){
+            String sequence = reader.readLine();
+            System.out.printf("Последовательность: %s%n", sequence);
+            double pValue = SpectralTest.test(sequence);
+            System.out.printf("Spectral Test p-value: %.6f%n", pValue);
 
-        if (pValue >= 0.01) {
-            System.out.println("Последовательность проходит тест (p >= 0.01)");
-        } else {
-            System.out.println("Последовательность не проходит тест (p < 0.01)");
+            if (pValue >= 0.01) {
+                System.out.println("Последовательность проходит тест (p >= 0.01)");
+            } else {
+                System.out.println("Последовательность не проходит тест (p < 0.01)");
+            }
+        }catch (IOException ex){
+            System.out.println("Ошибка: " + ex.getMessage());
         }
     }
 
